@@ -16,26 +16,18 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         Stack<TreeNode> stack = new Stack<>();
-        int order = 0;
-        addLeft(root,stack);
-        while(!stack.empty()){
-            TreeNode node = stack.pop();
-            if(++order == k){
-                return node.val;
+        TreeNode curr = root;
+        while(!stack.empty() || curr != null){
+            while(curr != null){
+                stack.push(curr);
+                curr = curr.left;
             }
-            if(node.right != null){
-                addLeft(node.right,stack);
+            curr = stack.pop();
+            if(--k == 0){
+                return curr.val;
             }
+            curr = curr.right;
         }
         return -1;
-        
-    }
-
-    public void addLeft(TreeNode node,  Stack<TreeNode> stack){
-        stack.push(node);
-        while(node.left!=null){
-            stack.push(node.left);
-            node = node.left;
-        }
     }
 }
