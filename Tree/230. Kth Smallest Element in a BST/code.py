@@ -11,20 +11,17 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        def addLeft(node,stack):
-            stack.append(node)
-            while node.left:
-                stack.append(node.left)
-                node = node.left
-        
         stack = []
-        addLeft(root,stack)
-        order = 0
-        while len(stack) > 0:
-            node = stack.pop()
-            order += 1
-            if order == k:
-                return node.val
-            if node.right:
-                addLeft(node.right,stack)
+        curr = root
+
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            curr = stack.pop()
+            k -= 1
+            if k == 0:
+                return curr.val
+            curr = curr.right
+
         
